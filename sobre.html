@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Sobre - SiteCars</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* 🔥 FUNDO */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: url("https://images.unsplash.com/photo-1503376780353-7e6692767b70") no-repeat center/cover;
+      opacity: 0.15;
+      z-index: -2;
+    }
+
+    /* PARTÍCULAS */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    /* NAVBAR (IGUAL SEU SITE) */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background: #1e293b;
+      position: sticky;
+      top: 0;
+    }
+
+    .logo {
+      color: #38bdf8;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #38bdf8;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      background: #38bdf8;
+      left: 0;
+      bottom: -5px;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* CONTAINER */
+    .container {
+      padding: 100px 40px;
+      text-align: center;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 20px;
+      color: #38bdf8;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #cbd5f5;
+    }
+
+    /* CARDS */
+    .cards {
+      display: flex;
+      gap: 20px;
+      margin-top: 60px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      background: rgba(30, 41, 59, 0.8);
+      padding: 25px;
+      border-radius: 12px;
+      width: 260px;
+      transition: transform 0.2s;
+      backdrop-filter: blur(10px);
+      transform-style: preserve-3d;
+    }
+
+    .card:hover {
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    /* ANIMAÇÃO SCROLL */
+    .hidden {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease;
+    }
+
+    .show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <canvas id="particles"></canvas>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">SiteCars</div>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Voltar</a></li>
+      <li><a href="#">Sobre</a></li>
+      <li><a href="#">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- CONTEÚDO -->
+  <div class="container hidden">
+    <h1>Sobre o SiteCars</h1>
+    <p>
+      O SiteCars foi criado com o objetivo de apresentar os melhores carros do mercado de forma simples, moderna e visual.
+    </p>
+  </div>
+
+  <!-- CARDS -->
+  <div class="cards">
+
+    <div class="card hidden">
+      <h3>Ampla Variedade de Veículos</h3>
+      <p>Modelos urbanos, SUVs e esportivos de alto padrão.</p>
+    </div>
+
+    <div class="card hidden">
+      <h3>Tecnologia e Inovação</h3>
+      <p>Experiência moderna com design fluido e interativo.</p>
+    </div>
+
+    <div class="card hidden">
+      <h3>Desempenho e Qualidade</h3>
+      <p>Informações completas sobre potência e performance.</p>
+    </div>
+
+  </div>
+
+  <script>
+    /* 🔥 ANIMAÇÃO SCROLL */
+    const elementos = document.querySelectorAll(".hidden");
+
+    function mostrarAoScroll() {
+      const alturaTela = window.innerHeight;
+
+      elementos.forEach(el => {
+        const topo = el.getBoundingClientRect().top;
+
+        if (topo < alturaTela - 100) {
+          el.classList.add("show");
+        }
+      });
+    }
+
+    window.addEventListener("scroll", mostrarAoScroll);
+    mostrarAoScroll();
+
+    /* 🔥 EFEITO 3D NOS CARDS */
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+      card.addEventListener("mousemove", e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const rotateX = -(y / rect.height - 0.5) * 10;
+        const rotateY = (x / rect.width - 0.5) * 10;
+
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "rotateX(0) rotateY(0)";
+      });
+    });
+
+    /* 🔥 PARTÍCULAS */
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    for (let i = 0; i < 80; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2,
+        speed: Math.random() * 0.5
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(p => {
+        p.y += p.speed;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.fillStyle = "#38bdf8";
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+</body>
+</html>

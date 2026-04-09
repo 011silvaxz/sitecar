@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Contato - SiteCars</title>
+
+<!-- Ícones -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #0f172a;
+  color: white;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background: #1e293b;
+}
+
+.logo {
+  color: #38bdf8;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* BOTÃO VOLTAR */
+.voltar {
+  text-decoration: none;
+  color: white;
+  border: 1px solid #38bdf8;
+  padding: 8px 15px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.voltar:hover {
+  background: #38bdf8;
+  color: black;
+}
+
+/* LAYOUT PRINCIPAL */
+.contato {
+  display: flex;
+  min-height: 90vh;
+}
+
+/* LADO ESQUERDO */
+.info {
+  width: 40%;
+  background: linear-gradient(180deg, #1e293b, #020617);
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info h1 {
+  color: #38bdf8;
+  margin-bottom: 20px;
+}
+
+.info p {
+  color: #cbd5f5;
+  margin-bottom: 30px;
+}
+
+/* ITENS */
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.item i {
+  color: #38bdf8;
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+/* WHATS */
+.whats-btn {
+  margin-top: 20px;
+  background: #25D366;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.whats-btn:hover {
+  transform: scale(1.05);
+}
+
+/* DIREITA */
+.form-area {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* FORM */
+.form-box {
+  width: 350px;
+}
+
+.form-box input,
+.form-box textarea {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #1e293b;
+  color: white;
+}
+
+.form-box button {
+  width: 100%;
+  padding: 12px;
+  background: #38bdf8;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.form-box button:hover {
+  background: #0ea5e9;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .contato {
+    flex-direction: column;
+  }
+
+  .info, .form-area {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR COM VOLTAR -->
+<nav class="navbar">
+  <div class="logo">SiteCars</div>
+  <a href="index.html" class="voltar"><i class="fas fa-arrow-left"></i> Voltar</a>
+</nav>
+
+<section class="contato">
+
+  <!-- ESQUERDA -->
+  <div class="info">
+    <h1>Entre em Contato</h1>
+    <p>Precisa de ajuda para escolher seu carro? Fale com a gente.</p>
+
+    <div class="item">
+      <i class="fas fa-envelope"></i>
+      <span>contato@sitecars.com</span>
+    </div>
+
+    <div class="item">
+      <i class="fas fa-phone"></i>
+      <span>(11) 99999-9999</span>
+    </div>
+
+    <div class="item">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>São Paulo - Brasil</span>
+    </div>
+
+    <div class="whats-btn" onclick="abrirWhats()">
+      <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+    </div>
+  </div>
+
+  <!-- DIREITA -->
+  <div class="form-area">
+    <div class="form-box">
+      <h2>Envie sua mensagem</h2>
+
+      <form id="formContato">
+        <input type="text" placeholder="Seu nome" required>
+        <input type="email" placeholder="Seu email" required>
+        <textarea placeholder="Digite sua mensagem..." required></textarea>
+
+        <button type="submit">Enviar</button>
+      </form>
+
+      <p id="msg"></p>
+    </div>
+  </div>
+
+</section>
+
+<script>
+const form = document.getElementById("formContato");
+const msg = document.getElementById("msg");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+  msg.style.color = "lightgreen";
+  msg.textContent = "Mensagem enviada com sucesso!";
+  form.reset();
+});
+
+function abrirWhats() {
+  const numero = "5511999999999";
+  const texto = "Olá, quero ajuda para escolher um carro!";
+  const url = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
+  window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
